@@ -7,30 +7,47 @@ import {GoogleLogin} from 'react-google-login'
 
 import Input from './Input'
 import Icon from './icon'
+import {signin,signup} from '../../actions/auth.js'
 import useStyles from './styles'
+
+const initialState = {
+    firstName:'',
+    lastName:'',
+    email:'',
+    password:'',
+    confirmPassword:''
+}
 
 const Auth = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
+    const [formData,setFormData] = useState(initialState);
 
     const [showPassword,setShowPassword] = useState(false)
     const [isSignUp,setIsSignUp] = useState(false);
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
+       // console.log(formData)
+    
+        if (isSignUp) {
+          dispatch(signup(formData, history));
+        } else {
+          dispatch(signin(formData, history));
+        }
+      };
 
-    }
-
-    const handleChange = () => {
-
+    const handleChange = (e) => {
+         setFormData({...formData,[e.target.name]:e.target.value})
     }
 
     const switchMode = () => {
          setIsSignUp((prev) => !prev);
-         handleShowPassword(false)
+         setShowPassword(false)
     }
 
-    const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword);
+    const handleShowPassword = () => setShowPassword(!showPassword);
 
     const googleSuccess = async (res) => {
       const result = res?.profileObj;
@@ -76,7 +93,7 @@ const Auth = () => {
                     {isSignUp? "Sign Up" : "Sign In"}
                 </Button>
                 <GoogleLogin
-            clientId="GOOGLE_ID"
+            clientId="YOUR_GOOGLE_CLIENT_ID"
             render={(renderProps) => (
               <Button className={classes.googleButton} color="primary" fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon />} variant="contained">
                 Google Sign In
