@@ -11,7 +11,7 @@ import Form from '../Form/Form'
 const Home = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const[currId,setCurrId] = useState(null);
+    const[currId,setCurrId] = useState(0);
 
     useEffect(() => {
         dispatch(getPosts())

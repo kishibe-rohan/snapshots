@@ -17,27 +17,32 @@ const user = JSON.parse(localStorage.getItem('profile'))
 const post = useSelector((state) => (currentId ? state.posts.find((message) => message._id === currentId) : null));
 const classes = useStyles();
 
+useEffect(() => {
+  if(post) setPostData(post);
+},[post])
 
 const resetForm = () => {
   setCurrentId(0);
   setPostData({ title: '', description: '', tags: '', selectedFile: '' });
 }
 
- useEffect(() => {
-   if(post) setPostData(post);
- },[post])
+
 
  const handleSubmit = async (e) => {
    e.preventDefault();
 
-   if(currentId===0)
+   if(currentId === 0)
    {
-    dispatch(createPost({...postData,name:user?.result?.name}))
+    await dispatch(createPost({...postData,name:user?.result?.name}))
+    resetForm();
    }
 
-   else dispatch(updatePost(currentId,{...postData,name:user?.result?.name}))
+   else {
+     await dispatch(updatePost(currentId,{...postData,name:user?.result?.name}))
+     resetForm();
+   }
 
-   resetForm();
+
  }
 
  
