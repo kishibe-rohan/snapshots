@@ -15,7 +15,7 @@ const Navbar = () => {
 
     const Logout = () => {
          dispatch({type:'LOGOUT'});
-         history.push('/');
+         history.push('/auth');
 
          setUser(null);
     }
@@ -39,8 +39,9 @@ const Navbar = () => {
     <div>
        <AppBar position="static" color="inherit" className={classes.appBar}>
            <div className={classes.brandContainer}>
+           <img src = {artlogo} alt="ArtHouse" height= "100" className={classes.image} /> 
              <Typography component={Link} to="/" variant="h2" align="center" className={classes.heading}>Art <span className={classes.logo}>House</span></Typography>
-             <img src = {artlogo} alt="ArtHouse" height= "80" className={classes.image} /> 
+            
            </div>
 
            <Toolbar className={classes.toolbar}>

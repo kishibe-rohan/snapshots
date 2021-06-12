@@ -14,7 +14,7 @@ function Form({currentId,setCurrentId}) {
     const dispatch = useDispatch();
 
 const user = JSON.parse(localStorage.getItem('profile'))
-const post = useSelector((state) => (currentId ? state.posts.find((message) => message._id === currentId) : null));
+const post = useSelector((state) => (currentId ? state.posts.posts.find((message) => message._id === currentId) : null));
 const classes = useStyles();
 
 useEffect(() => {
@@ -60,7 +60,7 @@ const resetForm = () => {
  }
 
   return (
-   <Paper className={classes.paper}>
+   <Paper className={classes.paper} elevation={6}>
        <form autoComplete = "off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
 <Typography variant="h6">{currentId? 'Editing' : 'Creating'} Art..</Typography>
 <TextField name="title" variant = "outlined" label="Title" fullWidth value = {postData.title} onChange = {(e) => setPostData({...postData,title:e.target.value})}/>
